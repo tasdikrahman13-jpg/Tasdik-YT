@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creator Promotion - Checkout</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial,sans-serif;background:#f5f6fa;color:#171717}
+  .app{max-width:480px;margin:auto;min-height:100vh;background:white}
+  header{padding:22px 20px;background:#111;color:white}
+  header h1{margin:0 0 6px;font-size:24px}
+  header p{margin:0;color:#ddd}
+  .card{margin:18px;padding:18px;border:1px solid #ddd;border-radius:16px}
+  label{display:block;margin:14px 0 7px;font-weight:700}
+  input,select{width:100%;padding:13px;border:1px solid #ccc;border-radius:10px;font-size:16px}
+  .price{font-size:28px;font-weight:800;margin:18px 0}
+  button{width:100%;padding:15px;border:0;border-radius:12px;background:#111;color:white;font-size:17px;font-weight:700}
+  .payment{display:none;text-align:center}
+  .payment img{width:280px;max-width:100%;border-radius:10px;margin:10px auto 16px}
+  .note{font-size:13px;color:#666;line-height:1.45}
+  .success{display:none;text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <h1>Creator Promotion</h1>
+  <p>Legitimate audience-promotion services</p>
+</header>
+
+<section id="checkout" class="card">
+  <h2>Place an Order</h2>
+
+  <label>Service</label>
+  <select id="service">
+    <option value="150">Creator Promotion — ₹150</option>
+    <option value="300">Creator Promotion — ₹300</option>
+    <option value="500">Creator Promotion — ₹500</option>
+    <option value="1000">Creator Promotion — ₹1,000</option>
+  </select>
+
+  <label>Your channel/profile URL</label>
+  <input id="url" type="url" placeholder="https://..." required>
+
+  <div class="price" id="price">₹150</div>
+  <button onclick="showPayment()">Continue to Payment</button>
+</section>
+
+<section id="payment" class="card payment">
+  <h2>Scan & Pay</h2>
+  <p>Pay the displayed order amount using the QR code below.</p>
+  <img src="payment-qr.jpg" alt="Payment QR code">
+  <div class="price" id="payAmount">₹150</div>
+  <p class="note">After payment, your backend should verify the payment before marking the order as paid. Do not rely on a screenshot alone.</p>
+  <button onclick="showSubmitted()">I Have Paid</button>
+</section>
+
+<section id="success" class="success">
+  <h2>Payment Submitted</h2>
+  <p>Your payment submission has been received for verification.</p>
+  <p><b>Order status:</b> Payment verification pending</p>
+</section>
+</div>
+
+<script>
+const service = document.getElementById('service');
+const price = document.getElementById('price');
+const payAmount = document.getElementById('payAmount');
+
+service.addEventListener('change', () => {
+  const amount = Number(service.value);
+  price.textContent = '₹' + amount.toLocaleString('en-IN');
+});
+
+function showPayment(){
+  const url = document.getElementById('url').value.trim();
+  if(!url){ alert('Please enter your channel/profile URL.'); return; }
+  const amount = Number(service.value);
+  payAmount.textContent = '₹' + amount.toLocaleString('en-IN');
+  document.getElementById('checkout').style.display='none';
+  document.getElementById('payment').style.display='block';
+}
+
+function showSubmitted(){
+  document.getElementById('payment').style.display='none';
+  document.getElementById('success').style.display='block';
+}
+</script>
+</body>
+</html>
